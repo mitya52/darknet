@@ -3,7 +3,7 @@ CUDNN=0
 OPENCV=0
 OPENMP=0
 DEBUG=0
-WIN32=1
+WIN32=0
 
 ARCH= -gencode arch=compute_20,code=[sm_20,sm_21] \
       -gencode arch=compute_30,code=sm_30 \

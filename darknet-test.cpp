@@ -1,12 +1,13 @@
+//#define USE_GPU // dirty hack...
 extern "C" {
-#include "include\darknet.h"
+#ifndef USE_GPU
+#include "include/darknet.h"
+#else
+#include "include/darknet_gpu.h"
+#endif
 }
 
-char cfgfile[] = "cfg\\yolo.cfg";
-char weightfile[] = "yolo.weights";
-char input[] = "data\\dog.jpg"; //, float thresh, float hier_thresh, char *outfile, int fullscreen
-char outfile[] = "output";
-char name_list[] = "data\\coco.names";
+void cuda_set_device(int);
 
 float thresh = 0.24;
 float hier_thresh = 0.5;
@@ -18,12 +19,16 @@ void free_ptrs(void **ptrs, int n)
     free(ptrs);
 }
 
-int main()
+// usage executable cfg/yolo.cfg data/dog.jpg data/coco.names
+int main(int argc, char* argv[])
 {
-    char **names = get_labels(name_list);
+    char weightfile[] = "yolo.weights";
+    char outfile[] = "output";
+
+    char **names = get_labels(argv[3]);
 
     image **alphabet = load_alphabet();
-    network net = parse_network_cfg(cfgfile);
+    network net = parse_network_cfg(argv[1]);
     if (weightfile) {
         load_weights(&net, weightfile);
     }
@@ -32,9 +37,11 @@ int main()
     double time;
     float nms=.3;
 
-    //cuda_set_device(0);
+#ifdef USE_GPU
+    cuda_set_device(0);
+#endif
 
-    image im = load_image_color(input, 0, 0);
+    image im = load_image_color(argv[2], 0, 0);
     image sized = letterbox_image(im, net.w, net.h);
     layer l = net.layers[net.n-1];
 
