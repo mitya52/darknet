@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <pthread.h>
 
 #define SECRET_NUM -1234
 extern int gpu_index;
@@ -570,7 +569,6 @@ typedef struct list{
     node *back;
 } list;
 
-pthread_t load_data(load_args args);
 list *read_data_cfg(char *filename);
 list *read_cfg(char *filename);
 
@@ -631,27 +629,32 @@ void rescale_weights(layer l, float scale, float trans);
 void rgbgr_weights(layer l);
 image *get_weights(layer l);
 
-void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const char *filename, char **names, int classes, int frame_skip, char *prefix, int avg, float hier_thresh, int w, int h, int fps, int fullscreen);
 void get_detection_boxes(layer l, int w, int h, float thresh, float **probs, box *boxes, int only_objectness);
 
 char *option_find_str(list *l, char *key, char *def);
 int option_find_int(list *l, char *key, int def);
 
+__declspec(dllexport)
 network parse_network_cfg(char *filename);
 void save_weights(network net, char *filename);
+__declspec(dllexport)
 void load_weights(network *net, char *filename);
 void save_weights_upto(network net, char *filename, int cutoff);
 void load_weights_upto(network *net, char *filename, int start, int cutoff);
 
 void zero_objectness(layer l);
+__declspec(dllexport)
 void get_region_boxes(layer l, int w, int h, int netw, int neth, float thresh, float **probs, box *boxes, float **masks, int only_objectness, int *map, float tree_thresh, int relative);
 void free_network(network net);
+__declspec(dllexport)
 void set_batch_network(network *net, int b);
 void set_temp_network(network net, float t);
 image load_image(char *filename, int w, int h, int c);
+__declspec(dllexport)
 image load_image_color(char *filename, int w, int h);
 image make_image(int w, int h, int c);
 image resize_image(image im, int w, int h);
+__declspec(dllexport)
 image letterbox_image(image im, int w, int h);
 image crop_image(image im, int dx, int dy, int w, int h);
 image resize_min(image im, int min);
@@ -660,6 +663,7 @@ image mask_to_rgb(image mask);
 int resize_network(network *net, int w, int h);
 void free_matrix(matrix m);
 void test_resize(char *filename);
+__declspec(dllexport)
 void save_image(image p, const char *name);
 void show_image(image p, const char *name);
 image copy_image(image p);
@@ -680,7 +684,6 @@ void random_distort_image(image im, float hue, float saturation, float exposure)
 void fill_image(image m, float s);
 image grayscale_image(image im);
 void rotate_image_cw(image im, int times);
-double what_time_is_it_now();
 image rotate_image(image m, float rad);
 void visualize_network(network net);
 float box_iou(box a, box b);
@@ -688,11 +691,14 @@ void do_nms(box *boxes, float **probs, int total, int classes, float thresh);
 data load_all_cifar10();
 box_label *read_boxes(char *filename, int *n);
 box float_to_box(float *f, int stride);
+__declspec(dllexport)
 void draw_detections(image im, int num, float thresh, box *boxes, float **probs, float **masks, char **names, image **alphabet, int classes);
 
 matrix network_predict_data(network net, data test);
+__declspec(dllexport)
 image **load_alphabet();
 image get_network_image(network net);
+__declspec(dllexport)
 float *network_predict(network net, float *input);
 float *network_predict_p(network *net, float *input);
 
@@ -706,8 +712,10 @@ box *make_boxes(network *net);
 void reset_network_state(network net, int b);
 void reset_network_state(network net, int b);
 
+__declspec(dllexport)
 char **get_labels(char *filename);
 void do_nms_sort(box *boxes, float **probs, int total, int classes, float thresh);
+__declspec(dllexport)
 void do_nms_obj(box *boxes, float **probs, int total, int classes, float thresh);
 
 matrix make_matrix(int rows, int cols);
@@ -717,9 +725,9 @@ matrix make_matrix(int rows, int cols);
 image get_image_from_stream(CvCapture *cap);
 #endif
 #endif
+__declspec(dllexport)
 void free_image(image m);
 float train_network(network net, data d);
-pthread_t load_data_in_thread(load_args args);
 void load_data_blocking(load_args args);
 list *get_paths(char *filename);
 void hierarchy_predictions(float *predictions, int n, tree *hier, int only_leaves, int stride);
@@ -731,10 +739,10 @@ int find_arg(int argc, char* argv[], char *arg);
 char *find_char_arg(int argc, char **argv, char *arg, char *def);
 char *basecfg(char *cfgfile);
 void find_replace(char *str, char *orig, char *rep, char *output);
+__declspec(dllexport)
 void free_ptrs(void **ptrs, int n);
 char *fgetl(FILE *fp);
 void strip(char *s);
-float sec(clock_t clocks);
 void **list_to_array(list *l);
 void top_k(float *a, int n, int k, int *index);
 int *read_map(char *filename);

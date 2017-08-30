@@ -3,19 +3,11 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include <unistd.h>
 #include <float.h>
 #include <limits.h>
 #include <time.h>
 
 #include "utils.h"
-
-double what_time_is_it_now()
-{
-    struct timespec now;
-    clock_gettime(CLOCK_REALTIME, &now);
-    return now.tv_sec + now.tv_nsec*1e-9;
-}
 
 int *read_intlist(char *gpu_list, int *ngpus, int d)
 {
@@ -195,11 +187,6 @@ void find_replace(char *str, char *orig, char *rep, char *output)
     *p = '\0';
 
     sprintf(output, "%s%s%s", buffer, rep, p+strlen(orig));
-}
-
-float sec(clock_t clocks)
-{
-    return (float)clocks/CLOCKS_PER_SEC;
 }
 
 void top_k(float *a, int n, int k, int *index)

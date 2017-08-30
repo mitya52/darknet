@@ -7,7 +7,6 @@
 
 #define TWO_PI 6.2831853071795864769252866
 
-double what_time_is_it_now();
 void shuffle(void *arr, size_t n, size_t size);
 void sorta_shuffle(void *arr, size_t n, size_t size, size_t sections);
 void free_ptrs(void **ptrs, int n);
@@ -41,7 +40,6 @@ float sum_array(float *a, int n);
 void mean_arrays(float **a, int n, int els, float *avg);
 float dist_array(float *a, float *b, int n, int sub);
 float **one_hot_encode(float *a, int n, int k);
-float sec(clock_t clocks);
 void print_statistics(float *a, int n);
 
 #endif
