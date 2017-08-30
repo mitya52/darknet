@@ -1,0 +1,4 @@
+Build darknet-test on Windows
+Makefile: WIN32=1
+make
+cl darknet-test.cpp /link darknet.lib
