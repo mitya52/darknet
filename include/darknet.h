@@ -634,27 +634,44 @@ void get_detection_boxes(layer l, int w, int h, float thresh, float **probs, box
 char *option_find_str(list *l, char *key, char *def);
 int option_find_int(list *l, char *key, int def);
 
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 network parse_network_cfg(char *filename);
 void save_weights(network net, char *filename);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 void load_weights(network *net, char *filename);
 void save_weights_upto(network net, char *filename, int cutoff);
 void load_weights_upto(network *net, char *filename, int start, int cutoff);
 
 void zero_objectness(layer l);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 void get_region_boxes(layer l, int w, int h, int netw, int neth, float thresh, float **probs, box *boxes, float **masks, int only_objectness, int *map, float tree_thresh, int relative);
 void free_network(network net);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 void set_batch_network(network *net, int b);
 void set_temp_network(network net, float t);
 image load_image(char *filename, int w, int h, int c);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 image load_image_color(char *filename, int w, int h);
 image make_image(int w, int h, int c);
 image resize_image(image im, int w, int h);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 image letterbox_image(image im, int w, int h);
 image crop_image(image im, int dx, int dy, int w, int h);
 image resize_min(image im, int min);
@@ -663,7 +680,10 @@ image mask_to_rgb(image mask);
 int resize_network(network *net, int w, int h);
 void free_matrix(matrix m);
 void test_resize(char *filename);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 void save_image(image p, const char *name);
 void show_image(image p, const char *name);
 image copy_image(image p);
@@ -691,14 +711,23 @@ void do_nms(box *boxes, float **probs, int total, int classes, float thresh);
 data load_all_cifar10();
 box_label *read_boxes(char *filename, int *n);
 box float_to_box(float *f, int stride);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 void draw_detections(image im, int num, float thresh, box *boxes, float **probs, float **masks, char **names, image **alphabet, int classes);
 
 matrix network_predict_data(network net, data test);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 image **load_alphabet();
 image get_network_image(network net);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 float *network_predict(network net, float *input);
 float *network_predict_p(network *net, float *input);
 
@@ -712,10 +741,15 @@ box *make_boxes(network *net);
 void reset_network_state(network net, int b);
 void reset_network_state(network net, int b);
 
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 char **get_labels(char *filename);
 void do_nms_sort(box *boxes, float **probs, int total, int classes, float thresh);
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 void do_nms_obj(box *boxes, float **probs, int total, int classes, float thresh);
 
 matrix make_matrix(int rows, int cols);
@@ -725,7 +759,10 @@ matrix make_matrix(int rows, int cols);
 image get_image_from_stream(CvCapture *cap);
 #endif
 #endif
+
+#ifdef WIN32
 __declspec(dllexport)
+#endif
 void free_image(image m);
 float train_network(network net, data d);
 void load_data_blocking(load_args args);
@@ -739,7 +776,7 @@ int find_arg(int argc, char* argv[], char *arg);
 char *find_char_arg(int argc, char **argv, char *arg, char *def);
 char *basecfg(char *cfgfile);
 void find_replace(char *str, char *orig, char *rep, char *output);
-__declspec(dllexport)
+
 void free_ptrs(void **ptrs, int n);
 char *fgetl(FILE *fp);
 void strip(char *s);
