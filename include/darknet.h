@@ -667,6 +667,7 @@ __declspec(dllexport)
 #endif
 image load_image_color(char *filename, int w, int h);
 image make_image(int w, int h, int c);
+image create_image_from_raw(unsigned char* raw, int w, int h, int c, int step);
 image resize_image(image im, int w, int h);
 
 #ifdef WIN32

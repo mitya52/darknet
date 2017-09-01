@@ -81,7 +81,7 @@ $(ALIB): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 $(SLIB): $(OBJS)
-	$(CC) $(CFLAGS) -shared $^ -o $@ $(LDFLAGS) $(WINOPTS)
+	$(CC) $(CFLAGS) -shared -nostartfiles $^ -o $@ $(LDFLAGS) $(WINOPTS)
 	$(BUILDDLL)
 
 $(OBJDIR)%.o: %.c $(DEPS)
