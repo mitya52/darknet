@@ -503,6 +503,22 @@ void rgbgr_image(image im)
     }
 }
 
+image create_image_from_raw(unsigned char* raw, int w, int h, int c, int step)
+{
+    unsigned char* data = raw;
+    image out = make_image(w, h, c);
+    int i, j, k;
+    for (i = 0; i < h; ++i){
+        for (k= 0; k < c; ++k){
+            for (j = 0; j < w; ++j){
+                out.data[k*w*h + i*w + j] = data[i*step + j*c + k]/255.;
+            }
+        }
+    }
+    rgbgr_image(out);
+    return out;
+}
+
 #ifdef OPENCV
 void show_image_cv(image p, const char *name, IplImage *disp)
 {

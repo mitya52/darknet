@@ -1,13 +1,15 @@
-GPU=0
-CUDNN=0
-OPENCV=0
-OPENMP=0
+GPU=1
+CUDNN=1
+OPENCV=1
+OPENMP=1
 DEBUG=0
 
 ARCH= -gencode arch=compute_30,code=sm_30 \
       -gencode arch=compute_35,code=sm_35 \
       -gencode arch=compute_50,code=[sm_50,compute_50] \
-      -gencode arch=compute_52,code=[sm_52,compute_52]
+      -gencode arch=compute_52,code=[sm_52,compute_52] \
+      -gencode arch=compute_60,code=sm_60 \
+      -gencode arch=compute_61,code=[sm_61,compute_61]
 #      -gencode arch=compute_20,code=[sm_20,sm_21] \ This one is deprecated?
 
 # This is what I use, uncomment if you know your arch and want to specify
@@ -20,7 +22,7 @@ EXEC=darknet
 OBJDIR=./obj/
 
 CC=gcc
-NVCC=nvcc 
+NVCC=/usr/local/cuda/bin/nvcc 
 AR=ar
 ARFLAGS=rcs
 OPTS=-Ofast
